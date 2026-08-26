@@ -23,15 +23,19 @@ type LogEntry = {
 };
 
 const initialApplication = {
-  applicant: "Jane Smith",
-  dateOfBirth: "1974-06-15",
-  product: "20_YEAR_TERM",
-  faceAmount: 1000000,
-  income: 150000,
-  tobacco: "N",
-  state: "IL",
-  consentReceived: true,
-  healthQuestionsComplete: false
+  "applicant": "Jane Smith",
+  "dateOfBirth": "1974-06-15",
+  "product": "20_YEAR_TERM",
+  "faceAmount": 1000000,
+  "income": 150000,
+  "tobacco": "N",
+  "state": "IL",
+  "consentReceived": true,
+  "healthQuestionsComplete": false,
+  "applicationId": "APP-10482",
+  "eventType": "APPLICATION_CREATED",
+  "eventId": "100",
+  "timestamp": 1787743327
 };
 
 function pretty(value: unknown) {
@@ -42,7 +46,8 @@ export default function Home() {
   const [applicationId, setApplicationId] = useState("APP-10482");
   const [payloadText, setPayloadText] = useState(pretty(initialApplication));
   const [customUpdateText, setCustomUpdateText] = useState(
-    pretty({ income: 175000, faceAmount: 1200000 })
+    pretty({ income: 175000, faceAmount: 1200000, applicationId: "APP-10482", 
+      eventType: "APPLICATION_UPDATED", eventId: "100", timestamp: 1787743327 })
   );
   const [busy, setBusy] = useState(false);
   const [health, setHealth] = useState<"unknown" | "up" | "down">("unknown");
@@ -78,12 +83,10 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch("/api/gateway/events", {
+      const response = await fetch("/", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          applicationId,
-          eventType,
           payload
         })
       });
@@ -155,10 +158,10 @@ export default function Home() {
       <header className="hero">
         <div>
           <div className="eyebrow">CONDENSE · LIFE INSURANCE DEMO</div>
-          <h1>Event Gateway Validator</h1>
+          <h1>Event Gateway - Web</h1>
           <p>
-            Send controlled application events from Vercel to the Condense event-gateway
-            and inspect the exact request and acknowledgement.
+            Send Insurance events to the Condense event-gateway
+            to validate application requests and do pre-qualification.
           </p>
         </div>
 
@@ -224,7 +227,7 @@ export default function Home() {
             <button
               className="eventButton"
               disabled={busy}
-              onClick={() => sendEvent("HEALTH_QUESTIONS_COMPLETED", {})}
+              onClick={updateApplication}
             >
               <strong>Complete health questions</strong>
               <span>HEALTH_QUESTIONS_COMPLETED</span>
@@ -233,7 +236,7 @@ export default function Home() {
             <button
               className="eventButton"
               disabled={busy}
-              onClick={() => sendEvent("CONSENT_RECEIVED", {})}
+              onClick={updateApplication}
             >
               <strong>Receive consent</strong>
               <span>CONSENT_RECEIVED</span>
@@ -258,14 +261,16 @@ export default function Home() {
             Send APPLICATION_UPDATED
           </button>
 
-          <div className="contract">
+          {/* <div className="contract">
             <h3>Gateway contract being validated</h3>
-            <code>POST /application/:applicationId/events</code>
+            <code>POST /</code>
             <pre>{`{
   "eventType": "...",
-  "payload": { ... }
+  applicationId: "...",
+  "eventId": "...",
+  "timestamp": "..."
 }`}</pre>
-          </div>
+          </div> */}
         </section>
       </div>
 
