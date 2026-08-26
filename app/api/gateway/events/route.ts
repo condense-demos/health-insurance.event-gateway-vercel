@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   };
 
   const url =
-    `${baseUrl}/`;
+    `${baseUrl.replace(/\/$/, "")}/application/${encodeURIComponent(applicationId)}/events`;
 
   const startedAt = Date.now();
 
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify(gatewayRequest.payload),
+      body: JSON.stringify(gatewayRequest),
       cache: "no-store",
       signal: AbortSignal.timeout(12000)
     });
