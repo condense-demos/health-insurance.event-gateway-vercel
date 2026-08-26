@@ -77,7 +77,7 @@ export default function Home() {
     setSuccess("");
 
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/app", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ applicationId, eventType, payload })

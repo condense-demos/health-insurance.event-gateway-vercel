@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   try {
-    const response = await fetch(`${baseUrl}/`, {
+    const response = await fetch(`${baseUrl}/app`, {
       method: "GET",
       cache: "no-store",
       signal: AbortSignal.timeout(8000)

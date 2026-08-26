@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   };
 
   const url =
-    `${baseUrl}`;
+    `${baseUrl}/app`;
 
   const startedAt = Date.now();
 
