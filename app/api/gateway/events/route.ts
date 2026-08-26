@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   };
 
   const url =
-    `${baseUrl.replace(/\/$/, "")}/application/${encodeURIComponent(applicationId)}/events`;
+    `${baseUrl}/`;
 
   const startedAt = Date.now();
 
