@@ -142,6 +142,7 @@ export default function Home() {
             to validate application requests and do pre-qualification.
           </p>
         </div>
+      </header>
 
       {error && <div className="error">{error}</div>}
 
@@ -227,17 +228,6 @@ export default function Home() {
           >
             Send APPLICATION_UPDATED
           </button>
-
-          {/* <div className="contract">
-            <h3>Gateway contract being validated</h3>
-            <code>POST /</code>
-            <pre>{`{
-  "eventType": "...",
-  applicationId: "...",
-  "eventId": "...",
-  "timestamp": "..."
-}`}</pre>
-          </div> */}
         </section>
       </div>
 
@@ -323,3 +313,4 @@ export default function Home() {
     </main>
   );
 }
+
