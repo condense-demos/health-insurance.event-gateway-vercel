@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify(gatewayRequest),
+      body: JSON.stringify(gatewayRequest.payload),
       cache: "no-store",
       signal: AbortSignal.timeout(12000)
     });
