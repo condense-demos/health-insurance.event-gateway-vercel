@@ -14,8 +14,8 @@ type ApiResult = {
 type LogEntry = {
   id: string;
   at: string;
-  // eventType: string;
-  // applicationId: string;
+  eventType: string;
+  applicationId: string;
   ok: boolean;
   status?: number;
   durationMs?: number;
@@ -57,6 +57,7 @@ export default function Home() {
 
 
   async function sendEvent(eventType: string, payload: Record<string, unknown>) {
+    const applicationId = payload.applicationId as string;
     setBusy(true);
     setError("");
 
@@ -76,8 +77,8 @@ export default function Home() {
         {
           id: crypto.randomUUID(),
           at: new Date().toLocaleTimeString(),
-          // eventType,
-          // applicationId,
+          eventType: eventType,
+          applicationId: applicationId,
           ok: Boolean(result.ok),
           status: result.gatewayStatus,
           durationMs: result.durationMs,
