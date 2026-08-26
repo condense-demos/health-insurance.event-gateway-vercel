@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   try {
-    const response = await fetch(`${baseUrl.replace(/\/$/, "")}/health`, {
+    const response = await fetch(`${baseUrl}/`, {
       method: "GET",
       cache: "no-store",
       signal: AbortSignal.timeout(8000)
