@@ -14,8 +14,8 @@ type ApiResult = {
 type LogEntry = {
   id: string;
   at: string;
-  eventType: string;
-  applicationId: string;
+  // eventType: string;
+  // applicationId: string;
   ok: boolean;
   status?: number;
   durationMs?: number;
@@ -55,28 +55,6 @@ export default function Home() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [error, setError] = useState("");
 
-  const gatewayLabel = useMemo(() => {
-    if (health === "up") return "Gateway reachable";
-    if (health === "down") return "Gateway unavailable";
-    return "Gateway not checked";
-  }, [health]);
-
-  async function checkHealth() {
-    setBusy(true);
-    setError("");
-
-    try {
-      const response = await fetch("/api/gateway/health", { cache: "no-store" });
-      const result = await response.json();
-      setLastResult(result);
-      setHealth(result.ok ? "up" : "down");
-    } catch (e) {
-      setHealth("down");
-      setError(e instanceof Error ? e.message : "Health check failed");
-    } finally {
-      setBusy(false);
-    }
-  }
 
   async function sendEvent(eventType: string, payload: Record<string, unknown>) {
     setBusy(true);
@@ -98,8 +76,8 @@ export default function Home() {
         {
           id: crypto.randomUUID(),
           at: new Date().toLocaleTimeString(),
-          eventType,
-          applicationId,
+          // eventType,
+          // applicationId,
           ok: Boolean(result.ok),
           status: result.gatewayStatus,
           durationMs: result.durationMs,
@@ -164,17 +142,6 @@ export default function Home() {
             to validate application requests and do pre-qualification.
           </p>
         </div>
-
-        <div className={`health ${health}`}>
-          <span className="dot" />
-          <div>
-            <strong>{gatewayLabel}</strong>
-            <button onClick={checkHealth} disabled={busy}>
-              Check health
-            </button>
-          </div>
-        </div>
-      </header>
 
       {error && <div className="error">{error}</div>}
 
