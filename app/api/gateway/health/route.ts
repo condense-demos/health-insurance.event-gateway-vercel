@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const baseUrl = process.env.GATEWAY_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_GATEWAY_BASE_URL;
 
   if (!baseUrl) {
     return NextResponse.json(
