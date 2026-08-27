@@ -76,8 +76,10 @@ export default function Home() {
     setError("");
     setSuccess("");
 
+    const url = `${process.env.NEXT_PUBLIC_GATEWAY_BASE_URL}/app`;
+
     try {
-      const response = await fetch("/app", {
+      const response = await fetch(url, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ applicationId, eventType, payload })
