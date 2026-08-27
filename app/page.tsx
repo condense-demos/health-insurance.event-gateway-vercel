@@ -50,7 +50,7 @@ const initialHealth: HealthAnswers = {
 const states = ["IL", "CA", "NY", "TX", "NJ"];
 
 export default function Home() {
-  const [applicationId] = useState("APP-10482");
+  const [applicationId, setApplicationId] = useState("APP-10482");
   const [applicant, setApplicant] = useState<Applicant>(initialApplicant);
   const [healthAnswers, setHealthAnswers] = useState<HealthAnswers>(initialHealth);
   const [applicationCreated, setApplicationCreated] = useState(false);
@@ -61,6 +61,7 @@ export default function Home() {
   const [lastResult, setLastResult] = useState<ApiResult | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const url = `${process.env.NEXT_PUBLIC_GATEWAY_BASE_URL}/app`;
 
   const progress = useMemo(() => {
     const completed = [applicationCreated, healthCompleted, consentGiven].filter(Boolean).length;
@@ -75,8 +76,6 @@ export default function Home() {
     setBusy(true);
     setError("");
     setSuccess("");
-
-    const url = `${process.env.NEXT_PUBLIC_GATEWAY_BASE_URL}/app`;
 
     try {
       const response = await fetch(url, {
@@ -174,7 +173,9 @@ export default function Home() {
             <span>Insurance Application</span>
           </div>
         </div>
-        <div className="applicationRef">Application #{applicationId}</div>
+        <div className="applicationRef">Application #
+          <input required value={applicationId} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setApplicationId(e.target.value)} />
+        </div>
       </header>
 
       <section className="heroInsurance">
